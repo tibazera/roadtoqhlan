@@ -1,26 +1,60 @@
 @import "tailwindcss";
 
+/* Road to QHLAN — design tokens. Arena-dark base, ember orange/red accents, armor tiers as status colours. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #05060a;
+  --bg-raised: #0b0d13;
+  --line: #ffffff1f;
+  --fg: #ecebe8;
+  --fg-dim: #a3a29e;
+  --ember: #ff6a1f;
+  --blood: #e2321f;
+  --armor-green: #35e07a;
+  --armor-yellow: #ffd400;
+  --armor-red: #ff3b30;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-raised: var(--bg-raised);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-dim: var(--fg-dim);
+  --color-ember: var(--ember);
+  --color-blood: var(--blood);
+  --color-green: var(--armor-green);
+  --color-yellow: var(--armor-yellow);
+  --font-sans: var(--f-body);
+  --font-mono: var(--f-mono);
+  --font-display: var(--f-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+html { scroll-behavior: smooth; background: var(--bg); }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--f-body), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* HUD panel: notched corners, thin line, subtle top glow */
+.hud {
+  position: relative;
+  background: linear-gradient(180deg, #ff6a1f0d, transparent 40%), var(--bg-raised);
+  border: 1px solid var(--line);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+}
+.eyebrow { font-family: var(--f-mono), monospace; font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ember); }
+.display { font-family: var(--f-display), Impact, sans-serif; text-transform: uppercase; letter-spacing: 0.01em; line-height: 0.95; }
+
+/* scroll reveal */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+
+:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  * { animation-duration: 0.01ms !important; }
 }

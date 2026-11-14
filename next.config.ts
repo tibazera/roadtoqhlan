@@ -1,9 +1,16 @@
 import type { NextConfig } from "next";
 
+const githubPages = process.env.GITHUB_PAGES === "true";
+const basePath = githubPages ? "/roadtoqhlan" : "";
+
 const nextConfig: NextConfig = {
-  /* config options here */
-  cacheComponents: true,
-  partialPrefetching: true,
+  output: githubPages ? "export" : undefined,
+  basePath,
+  trailingSlash: true,
+  images: { unoptimized: githubPages },
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
+  cacheComponents: !githubPages,
+  partialPrefetching: !githubPages,
   turbopack: {
     rules: {
       "*.css": {

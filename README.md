@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Road to QHLAN 2028
 
-## Getting Started
+Community campaign site for Brazilian QuakeWorld players traveling to QHLAN.
 
-First, run the development server:
+Public site: https://tibazera.github.io/roadtoqhlan/
 
-```bash
+## Development
+
+Requires Node.js 24.
+
+```sh
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Validation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npx vitest run
+npm run lint
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Publishing
 
-## Learn More
+Push changes to `master`. GitHub Actions tests the project, exports the static site, and deploys it to GitHub Pages.
 
-To learn more about Next.js, take a look at the following resources:
+To reproduce the Pages build in PowerShell:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```powershell
+$env:GITHUB_PAGES = "true"
+$env:NEXT_PUBLIC_SITE_URL = "https://tibazera.github.io/roadtoqhlan/"
+npm run build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The static export is written to `out/`. Local development keeps the server-based Next.js configuration and prototype preview.
 
-## Deploy on Vercel
+## Content
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `src/content/site.ts`: team profiles, contact, FAQ, and campaign milestones.
+- `src/content/ledger.ts`: verified fundraising figures and public financial records.
+- `src/content/supporters.ts`: verified supporters who consented to publication.
+- `public/team/`: player photos.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Donations remain disabled until the launch date and a hosted payment link are configured through `NEXT_PUBLIC_DONATION_URL`. Admin authentication is not connected; the admin page is informational. Never commit private donor information, credentials, or unredacted receipts.

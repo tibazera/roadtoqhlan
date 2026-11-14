@@ -1,69 +1,54 @@
-import Image from "next/image";
+import Link from "next/link";
+import FlightGlobe from "@/components/flight/FlightGlobe";
+import { FUNDRAISING_GOAL_EUR } from "@/lib/campaign";
+import { netDonationsEur } from "@/content/ledger";
+import { Reveal } from "@/components/site/Reveal";
+import { BudgetNotice, BudgetTable, SplitExplainer } from "@/components/sections/Finance";
+import { DonateBox, FaqList, TeamGrid } from "@/components/sections/Community";
+
+function Block({ eyebrow, title, href, cta, children }: { eyebrow: string; title: string; href?: string; cta?: string; children: React.ReactNode }) {
+  return (
+    <section className="mx-auto max-w-6xl px-4 py-16">
+      <Reveal>
+        <p className="eyebrow">{eyebrow}</p>
+        <h2 className="display mt-2 text-4xl font-extrabold sm:text-6xl">{title}</h2>
+      </Reveal>
+      <div className="mt-8">{children}</div>
+      {href && <Link href={href} className="mt-6 inline-block text-ember underline">{cta} →</Link>}
+    </section>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <section className="relative overflow-hidden px-4 pb-8 pt-16 text-center">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(ellipse_at_top,#ff6a1f33,transparent_70%)]" />
+        <p className="eyebrow relative">Four Brazilian Players. One Dream. One Community.</p>
+        <h1 className="display relative mx-auto mt-4 max-w-4xl text-6xl font-extrabold sm:text-8xl">
+          From Brazil to <span className="text-ember">QHLAN 2028</span>
+        </h1>
+        <p className="relative mx-auto mt-5 max-w-2xl text-lg text-dim">
+          After years of playing together across continents, we&apos;re hoping to finally meet our QuakeWorld friends in person. Help us make the journey from Brazil to Sweden possible.
+        </p>
+        <div className="relative mt-7 flex flex-wrap justify-center gap-3">
+          <a href="#support" className="bg-ember px-6 py-3 font-semibold text-black hover:bg-blood hover:text-white">Support Our Journey</a>
+          <Link href="/budget" className="border border-line px-6 py-3 font-semibold hover:border-ember">See Our Budget</Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+        <p className="relative mt-4 font-mono text-xs text-dim">Campaign launches December 25, 2026 · Help Us Cross the Ocean</p>
+      </section>
+
+      <FlightGlobe verifiedNet={netDonationsEur()} goal={FUNDRAISING_GOAL_EUR} />
+
+      <Block eyebrow="Our story" title="Years online. Finally in person." href="/story" cta="Read our story">
+        <p className="max-w-3xl text-lg text-dim"><strong className="text-fg">Four players, one passion, one shared goal: getting to QHLAN 2028.</strong> We are not asking the community to pay for a vacation. We are asking for voluntary help with a portion of essential travel costs, because flying from Brazil to Europe is far more expensive for us. We are putting in our own money too. Every contribution is optional, and we are grateful for all of it.</p>
+      </Block>
+      <Block eyebrow="Meet the team" title="The lineup" href="/team" cta="Meet the team"><TeamGrid /></Block>
+      <Block eyebrow="Where your money goes" title="Every cost in the open" href="/transparency" cta="Full financial transparency">
+        <div className="grid gap-5"><SplitExplainer /><BudgetTable /><BudgetNotice /></div>
+      </Block>
+      <section id="support" className="mx-auto max-w-3xl px-4 py-16"><DonateBox /></section>
+      <Block eyebrow="FAQ" title="Questions, answered" href="/faq" cta="All questions"><FaqList /></Block>
+    </>
   );
 }
