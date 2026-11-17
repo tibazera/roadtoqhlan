@@ -21,10 +21,10 @@ function photoFor(p: Player): string | null {
 }
 
 /** Photos from QHLAN 2017 via the QuakeWorld Wiki, credited as listed there. Crop per player. */
-const PHOTO_POS: Record<string, string> = { gt: "50% 8%", mur: "66% 30%", tiba: "50% 0%" };
+const PHOTO_POS: Record<string, string> = { gt: "50% 8%", tiba: "50% 0%" };
 const QHLAN17_CREDIT = "Photo: QHLAN 2017, credit Devogen & DSHARP3 (via QuakeWorld Wiki)";
 /** Photos supplied by the players themselves need no credit line. */
-const PHOTO_CREDIT: Record<string, string> = { gt: QHLAN17_CREDIT, mur: QHLAN17_CREDIT };
+const PHOTO_CREDIT: Record<string, string> = { gt: QHLAN17_CREDIT };
 
 function PlayerCard({ p, i }: { p: Player; i: number }) {
   const photo = photoFor(p);
